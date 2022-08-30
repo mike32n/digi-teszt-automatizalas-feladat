@@ -28,6 +28,11 @@ public class PageObject {
                 .until(ExpectedConditions.visibilityOf(webElement));
     }
 
+    protected void waitForInvisibility(WebElement webElement) throws Error {
+        new WebDriverWait(driver, 1)
+                .until(ExpectedConditions.invisibilityOf(webElement));
+    }
+
     protected void navigate(String URL) {
         driver.get(URL);
     }

@@ -17,8 +17,17 @@ public class LoginPage extends PageObject {
     @FindBy(xpath = "//*[@id='login']/div[1]")
     private WebElement feedbackText;
 
+    @FindBy(xpath = "//*[@id='home']//div[3]/div/div[1]")
+    private WebElement passAlertText;
+
+    @FindBy(xpath = "//*[@id='home']/form/div[2]/div/div[1]")
+    private WebElement emailAlertText;
+
     @FindBy(xpath = "//div[5]/div[2]/button")
     private WebElement cookieConsentAgreeButton;
+
+    @FindBy(xpath = "/html/body/div[5]")
+    private WebElement cookieConsentTextArea;
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -52,15 +61,29 @@ public class LoginPage extends PageObject {
         fieldPass.sendKeys(date);
     }
 
-    public void verifyUnSuccess() {
+    public void verifyIncorrectCredentials() {
         waitForVisibility(feedbackText);
-        Assert.assertTrue(feedbackText.getText().endsWith("nem egyezik."));
+        String alert = feedbackText.getText();
+        Assert.assertTrue(alert.contains("nem egyezik"));
+    }
+
+    public void verifyMissingPassword() {
+        waitForVisibility(passAlertText);
+        String alert = passAlertText.getText();
+        Assert.assertTrue(alert.contains("jelszó mező kitöltése kötelező"));
+    }
+
+    public void verifyMissingEmail() {
+        waitForVisibility(emailAlertText);
+        String alert = emailAlertText.getText();
+        Assert.assertTrue(alert.contains("név mező kitöltése kötelező"));
     }
 
     public void clickCookieConsentAgreeButton() {
 
         try {
             clickOn(cookieConsentAgreeButton);
+            waitForInvisibility(cookieConsentTextArea);
         } catch (Exception ignore) {
         }
     }

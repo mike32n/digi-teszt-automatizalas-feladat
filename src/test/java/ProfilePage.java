@@ -16,4 +16,8 @@ public class ProfilePage extends PageObject {
         waitForVisibility(userEmail);
         Assert.assertTrue(userEmail.getText().equalsIgnoreCase("teszt.emil@outlook.com"));
     }
+
+    public void logout() {
+        navigate("https://ugyfelkapu.digi.hu/logout");
+    }
 }
