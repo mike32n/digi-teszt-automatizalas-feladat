@@ -13,6 +13,11 @@ public class PageObject {
 
     }
 
+    public void maximizeWindow() {
+        driver.manage().deleteAllCookies();
+        driver.manage().window().maximize();
+    }
+
     protected void clickOn(WebElement webElement) {
         waitForClickable(webElement);
         webElement.click();
@@ -29,7 +34,7 @@ public class PageObject {
     }
 
     protected void waitForInvisibility(WebElement webElement) throws Error {
-        new WebDriverWait(driver, 1)
+        new WebDriverWait(driver, 2)
                 .until(ExpectedConditions.invisibilityOf(webElement));
     }
 

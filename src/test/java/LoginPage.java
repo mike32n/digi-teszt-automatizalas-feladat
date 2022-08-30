@@ -1,7 +1,10 @@
 import org.junit.Assert;
+import org.junit.jupiter.api.Timeout;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.concurrent.TimeUnit;
 
 public class LoginPage extends PageObject {
 
@@ -33,11 +36,6 @@ public class LoginPage extends PageObject {
         super(driver);
     }
 
-    public void maximizeWindow() {
-        driver.manage().deleteAllCookies();
-        driver.manage().window().maximize();
-    }
-
     public void openLoginPage() {
         driver.get(Utils.BASE_URL);
     }
@@ -63,6 +61,7 @@ public class LoginPage extends PageObject {
 
     public void verifyIncorrectCredentials() {
         waitForVisibility(feedbackText);
+        driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
         String alert = feedbackText.getText();
         Assert.assertTrue(alert.contains("nem egyezik"));
     }
